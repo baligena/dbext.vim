@@ -5950,7 +5950,7 @@ function! dbext#DB_execSql(query)
     let curcol      = virtcol(".")
 
    " Add query to internal history
-    " call s:DB_historyAdd(query)
+    call s:DB_historyAdd(query)
 
     " We need some additional database type information to continue
     if s:DB_get("buffer_defaulted") != 1
@@ -7159,7 +7159,7 @@ function! s:DB_switchToBuffer(buf_name, buf_file, get_buf_nr_name)
         " For some reason there is a visual bell each time
         " this happens.
 
-        let open_new_split = 0
+        let open_new_split = 1
         if bufwinnr(res_buf_nr) > 0
             let open_new_split = 0
             " If the buffer is visible, switch to it
@@ -9050,7 +9050,7 @@ function! s:DB_historyAdd(sql)
     call s:DB_historySave(1)
 
     let res_buf_name   = s:DB_resBufName()
-    " call dbext#DB_windowClose(s:DB_resBufName())
+    call dbext#DB_windowClose(s:DB_resBufName())
 
     " Return to original window
     " exec cur_winnr."wincmd w"
