@@ -1678,7 +1678,8 @@ function! dbext#DB_setMultipleOptions(multi_options, ...)
       let multi_options = multi_options . parms
     endfor
     " Strip leading or following quotes, single or double
-    let options_cs = s:DB_stripLeadFollowQuotesSpace(multi_options)
+    " let options_cs = s:DB_stripLeadFollowQuotesSpace(multi_options)
+    let options_cs = multi_options
 
     " replace all "\:" sequences with \!
     let options_cs = substitute(options_cs, '\\:', '\\!', '' )
@@ -1731,7 +1732,7 @@ function! dbext#DB_setMultipleOptions(multi_options, ...)
                 " Retrieve the option name
                 let opt_name  = matchstr(option, '.\{-}\ze=')
                 let opt_value = matchstr(option, '=\zs.*')
-                let opt_value = s:DB_stripLeadFollowQuotesSpace(opt_value)
+                " let opt_value = s:DB_stripLeadFollowQuotesSpace(opt_value)
 
                 " replace all "\!" sequences with :
                 let opt_value = substitute(opt_value, '\\!', ':', '' )
@@ -1996,9 +1997,9 @@ function! s:DB_ASA_stripHeaderFooter(result)
     " table_name         table_id
     " ---------------------------
     " ZTSAAP_C_OPKEY     867
-    " 
+    "
     " (1 rows)
-    " 
+    "
     " Execution time: 0.025 seconds
 
     " Strip off column headers ending with a newline
@@ -5949,7 +5950,7 @@ function! dbext#DB_execSql(query)
     let curcol      = virtcol(".")
 
    " Add query to internal history
-    call s:DB_historyAdd(query)
+    " call s:DB_historyAdd(query)
 
     " We need some additional database type information to continue
     if s:DB_get("buffer_defaulted") != 1
@@ -7158,7 +7159,7 @@ function! s:DB_switchToBuffer(buf_name, buf_file, get_buf_nr_name)
         " For some reason there is a visual bell each time
         " this happens.
 
-        let open_new_split = 1
+        let open_new_split = 0
         if bufwinnr(res_buf_nr) > 0
             let open_new_split = 0
             " If the buffer is visible, switch to it
@@ -9049,7 +9050,7 @@ function! s:DB_historyAdd(sql)
     call s:DB_historySave(1)
 
     let res_buf_name   = s:DB_resBufName()
-    call dbext#DB_windowClose(s:DB_resBufName())
+    " call dbext#DB_windowClose(s:DB_resBufName())
 
     " Return to original window
     " exec cur_winnr."wincmd w"
